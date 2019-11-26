@@ -690,6 +690,21 @@ namespace SqlBulkTools.UnitTests
             Assert.Equal(result, "WHERE [id] = @id COLLATE DEFAULT_COLLATION");
         }
 
+        [Fact]
+        public void BulkOperationsHelper_BuildMatchTargetOnKey_ReturnsCorrectFields()
+        {
+            Book book = new Book();
+
+            var propertyInfoList = typeof(Book).GetProperties().ToList();
+
+            HashSet<string> result = BulkOperationsHelper.GetAllKeyColumns(propertyInfoList);
+
+            string ResultStr = result.FirstOrDefault().ToString();
+
+            Assert.Equal("Id", ResultStr);
+
+        }
+
         private HashSet<string> GetTestColumns()
         {
             var parameters = new HashSet<string>();
@@ -715,5 +730,9 @@ namespace SqlBulkTools.UnitTests
 
             return parameters;
         }
+
+
+
+
     }
 }

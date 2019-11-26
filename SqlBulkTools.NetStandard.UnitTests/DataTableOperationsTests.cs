@@ -178,5 +178,6 @@ namespace SqlBulkTools.UnitTests
             Assert.Equal(dt.Columns[dtOps.GetColumn<Book>(x => x.Id)].AutoIncrementSeed, autoIncrementSeedTest);
 
         }
+
     }
 }

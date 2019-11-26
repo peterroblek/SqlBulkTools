@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.SqlClient;
@@ -856,7 +857,7 @@ namespace SqlBulkTools
             bulkcopy.EnableStreaming = options.EnableStreaming;
             bulkcopy.BatchSize = options.BatchSize;
             bulkcopy.BulkCopyTimeout = options.BulkCopyTimeout;
-
+            
             if (options.BulkCopyNotification == null) 
                 return;
             
@@ -881,6 +882,20 @@ namespace SqlBulkTools
                 else
                     bulkCopy.ColumnMappings.Add(column, column);
             }
+        }
+
+        internal static HashSet<string> GetAllKeyColumns(List<PropertyInfo> propertyInfoList)
+        {
+            var columns = new HashSet<string>();
+            foreach (var property in propertyInfoList)
+            {
+                var Attr = Attribute.GetCustomAttribute(property, typeof(KeyAttribute))as KeyAttribute;
+
+                if (Attr != null)
+                    columns.Add(property.Name);
+            }
+
+            return columns;
         }
 
         internal static HashSet<string> GetAllValueTypeAndStringColumns(List<PropertyInfo> propertyInfoList, Type type)

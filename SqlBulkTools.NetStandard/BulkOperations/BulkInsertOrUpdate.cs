@@ -86,6 +86,22 @@ namespace SqlBulkTools
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public BulkInsertOrUpdate<T> MatchTargetOnPrivateKey()
+        {
+            var keys = BulkOperationsHelper.GetAllKeyColumns(_propertyInfoList);
+
+            if (keys == null)
+                throw new NullReferenceException("Key column can't be null.");
+
+            _matchTargetOn.AddRange(keys);
+
+            return this;
+        }
+
+        /// <summary>
         /// Sets the identity column for the table. Required if an Identity column exists in table and one of the two
         /// following conditions is met: (1) MatchTargetOn list contains an identity column (2) AddAllColumns is used in setup.
         /// </summary>
