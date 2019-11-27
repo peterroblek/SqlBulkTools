@@ -89,7 +89,7 @@ namespace SqlBulkTools
         /// 
         /// </summary>
         /// <returns></returns>
-        public BulkInsertOrUpdate<T> MatchTargetOnPrivateKey()
+        public BulkInsertOrUpdate<T> MatchTargetOnPrimaryKey()
         {
             var keys = BulkOperationsHelper.GetAllKeyColumns(_propertyInfoList);
 

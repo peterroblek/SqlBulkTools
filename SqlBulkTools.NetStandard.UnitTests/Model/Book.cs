@@ -9,7 +9,7 @@ namespace SqlBulkTools.TestCommon.Model
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int Id { get; set; }
-
+        
         public int? WarehouseId { get; set; }
 
         [MaxLength(13)] public string ISBN { get; set; }

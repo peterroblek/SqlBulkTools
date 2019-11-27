@@ -141,7 +141,8 @@ Notes:
 
 (1) It's possible to use AddAllColumns for operations BulkInsert/BulkInsertOrUpdate/BulkUpdate. 
 (2) MatchTargetOn is mandatory for BulkUpdate, BulkInsertOrUpdate and BulkDelete... unless you want 
-to eat an SqlBulkToolsException. 
+to eat an SqlBulkToolsException. MatchTargetOnPrimaryKey() method automatically set matching based 
+on key attributes.
 (3) If model property name does not match the actual SQL column name, you can set up a custom 
 mapping. An example of this is shown in a dedicated section somewhere in this documentation...
 (4) BulkInsertOrUpdate also supports DeleteWhenNotMatched which is false by default. With power 
@@ -153,6 +154,27 @@ You can of course update based on an identity column (using MatchTargetOn) but j
 SetIdentityColumn to mark it as an identity column so we can sort it out. A user friendly exception will 
 be thrown if you forget. 
 */
+
+// Example matching with key attribute in Book class
+
+using (TransactionScope trans = new TransactionScope())
+{
+	using (SqlConnection conn = new SqlConnection(ConfigurationManager
+	.ConnectionStrings["SqlBulkToolsTest"].ConnectionString))
+	{
+        bulk.Setup<Book>()
+            .ForCollection(books)
+            .WithTable("Books")
+            .AddColumn(x => x.ISBN)
+            .AddColumn(x => x.Title)
+            .AddColumn(x => x.Description)
+            .BulkInsertOrUpdate()
+            .MatchTargetOnPrimaryKey()
+            .Commit(conn);
+    }
+
+	trans.Complete();
+}
 ```
 
 ### BulkUpdate
