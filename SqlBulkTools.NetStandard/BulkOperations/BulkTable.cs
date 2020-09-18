@@ -70,7 +70,6 @@ namespace SqlBulkTools.BulkCopy
             Columns.Add(propertyName);
 
             CustomColumnMappings.Add(propertyName, destination);
-
             return new BulkAddColumn<T>(_list, _tableName, Columns, CustomColumnMappings, _schema, _bulkCopySettings, _propertyInfoList);
         }
 

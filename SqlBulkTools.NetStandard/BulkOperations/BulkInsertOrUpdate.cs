@@ -268,7 +268,6 @@ namespace SqlBulkTools
                 }
 
                 comm = GetCommand(connection);
-
                 command.CommandText = comm;
 
                 if (_parameters.Count > 0)
